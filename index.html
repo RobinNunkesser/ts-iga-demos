@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interaktive Grafikanwendungen — Demos & Visualisierungen</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body style="overflow-y: auto;">
+    <div class="hub-container">
+      <div class="hub-header">
+        <h1>Interaktive Grafikanwendungen (IGA)</h1>
+        <p style="color: var(--text-muted); margin: 0; font-size: 0.95rem;">
+          Interaktive Vorlesungsdemos, Visualisierer und Experimentier-Sandboxes für p5.js, Vektormathematik und Game Physics.
+        </p>
+      </div>
+
+      <div class="demo-grid">
+        <a class="demo-card" href="./demos/transform/index.html">
+          <span class="tag">Transformationen</span>
+          <h3>Matrix-Stack: push() & pop()</h3>
+          <p>Visualisierung von State Isolation, Translation, Rotation und kumulativer Verzerrung bei vergessenen Matrix-Resets.</p>
+          <span style="color: var(--accent-cyan); font-size: 0.85rem; font-weight: 600;">Demo öffnen →</span>
+        </a>
+
+        <a class="demo-card" href="./demos/reflection/index.html">
+          <span class="tag">Kollision & Vektoren</span>
+          <h3>Arcade-Reflexion Visualisierer</h3>
+          <p>Interaktiver Ball-Paddle-Kollisionstest: Visualisierung von relativeHit, Abprallwinkel und Vektorberechnung in Echtzeit.</p>
+          <span style="color: var(--accent-cyan); font-size: 0.85rem; font-weight: 600;">Demo öffnen →</span>
+        </a>
+
+        <a class="demo-card" href="./demos/juiciness/index.html">
+          <span class="tag">Game Feel</span>
+          <h3>Juiciness Sandbox</h3>
+          <p>Vergleiche rohe Spielphysik mit saftigem sensorischem Feedback: Screen Shake, Partikelsystem, Squash/Stretch und Web Audio.</p>
+          <span style="color: var(--accent-cyan); font-size: 0.85rem; font-weight: 600;">Demo öffnen →</span>
+        </a>
+      </div>
+
+      <footer style="margin-top: 20px; border-top: 1px solid var(--border); padding-top: 12px; font-size: 0.8rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+        <span>Prof. Dr. Robin Nunkesser — Hochschule Hamm-Lippstadt</span>
+        <span><a href="https://github.com/RobinNunkesser/ts-pong-p5js" target="_blank" style="color: var(--accent-cyan); text-decoration: none;">🎮 Referenzspiel ts-pong-p5js</a></span>
+      </footer>
+    </div>
+  </body>
+</html>

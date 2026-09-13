@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Matrix Transformations & push/pop — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>Matrix-Stack: push() & pop()</h1>
+          <p>State Isolation vs. kumulative Transformationsverzerrung</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../reflection/index.html">Reflexion</a>
+          <a class="nav-btn" href="../juiciness/index.html">Juiciness</a>
+          <a class="nav-btn active" href="#">Transform</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container"></main>
+
+      <div class="controls-bar">
+        <label class="control-item">
+          <input type="checkbox" id="toggle-isolate" checked />
+          <span style="font-weight: 600;">push() & pop() aktiv (Isoliert)</span>
+        </label>
+        <label class="control-item">
+          <span>Objekt 1 Rotation:</span>
+          <input type="range" id="rot-slider" min="0" max="6.28" step="0.05" value="0.78" style="width: 110px;" />
+        </label>
+        <label class="control-item">
+          <span>Objekt 1 Skalierung:</span>
+          <input type="range" id="scale-slider" min="0.5" max="2.0" step="0.1" value="1.2" style="width: 90px;" />
+        </label>
+        <div class="metric-badge" id="metric-state">Status: Isoliert (Korrekt)</div>
+      </div>
+    </div>
+    <script type="module" src="../../src/transform.ts"></script>
+  </body>
+</html>

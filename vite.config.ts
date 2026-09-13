@@ -1,0 +1,16 @@
+import { resolve } from "path";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  base: "./",
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, "index.html"),
+        reflection: resolve(__dirname, "demos/reflection/index.html"),
+        juiciness: resolve(__dirname, "demos/juiciness/index.html"),
+        transform: resolve(__dirname, "demos/transform/index.html"),
+      },
+    },
+  },
+});

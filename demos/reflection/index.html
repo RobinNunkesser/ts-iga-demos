@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Arcade-Reflexion Visualisierer — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>Arcade-Reflexion & Winkelberechnung</h1>
+          <p>Visualisierung von relativeHit & Abprallwinkel $\theta \in [-60^\circ, +60^\circ]$</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn active" href="#">Reflexion</a>
+          <a class="nav-btn" href="../juiciness/index.html">Juiciness</a>
+          <a class="nav-btn" href="../transform/index.html">Transform</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container"></main>
+
+      <div class="controls-bar">
+        <label class="control-item">
+          <span>Auftreffpunkt:</span>
+          <input type="range" id="hit-slider" min="-1" max="1" step="0.05" value="0.5" style="width: 130px;" />
+        </label>
+        <div class="metric-badge" id="metric-hit">offset: +0.50</div>
+        <div class="metric-badge" id="metric-angle">winkel: +30.0°</div>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-arcade" checked />
+          <span>Arcade-Winkel (vs. 45°-Spiegelung)</span>
+        </label>
+        <button class="btn-action" id="btn-fire">▶ Ball werfen</button>
+      </div>
+    </div>
+    <script type="module" src="../../src/reflection.ts"></script>
+  </body>
+</html>

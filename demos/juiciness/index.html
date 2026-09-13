@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Game Feel & Juiciness Sandbox — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>Game Feel & Juiciness Sandbox</h1>
+          <p>Vergleiche "trockene" Physik mit saftigem sensorischem Feedback</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../reflection/index.html">Reflexion</a>
+          <a class="nav-btn active" href="#">Juiciness</a>
+          <a class="nav-btn" href="../transform/index.html">Transform</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container"></main>
+
+      <div class="controls-bar">
+        <label class="control-item">
+          <input type="checkbox" id="toggle-shake" checked />
+          <span>Screen Shake</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-particles" checked />
+          <span>Partikeleffekte</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-audio" checked />
+          <span>Web Audio SFX</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-squash" checked />
+          <span>Squash & Stretch</span>
+        </label>
+        <button class="btn-action" id="btn-dry" style="background: #334155;">Trocken (Alle Aus)</button>
+        <button class="btn-action" id="btn-juicy">✨ Maximal Juicy (Alle An)</button>
+      </div>
+    </div>
+    <script type="module" src="../../src/juiciness.ts"></script>
+  </body>
+</html>
