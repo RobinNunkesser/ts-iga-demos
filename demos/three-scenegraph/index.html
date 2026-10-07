@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>3D Scenegraph & Hierarchien — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>3D-Scenegraph & Transformationen</h1>
+          <p>Hierarchische Eltern-Kind-Beziehungen (Sonne → Planet → Mond)</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../transform/index.html">2D Transform</a>
+          <a class="nav-btn active" href="#">3D Scenegraph</a>
+          <a class="nav-btn" href="../three-materials/index.html">3D Material</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container"></main>
+
+      <div class="controls-bar">
+        <label class="control-item">
+          <input type="checkbox" id="toggle-orbit" checked />
+          <span>Animation aktiv</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-axes" checked />
+          <span>Lokale Koordinatenachsen (AxesHelper)</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-wireframe" />
+          <span>Wireframe (Polygone)</span>
+        </label>
+        <div class="metric-badge" id="metric-info">OrbitControls: Mit Maus drehen/zoomen</div>
+      </div>
+    </div>
+    <script type="module" src="../../src/three-scenegraph.ts"></script>
+  </body>
+</html>

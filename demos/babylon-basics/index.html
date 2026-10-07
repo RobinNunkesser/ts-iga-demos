@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Babylon.js Engine & GlowLayer — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>Babylon.js: Engine, MeshBuilder & GlowLayer</h1>
+          <p>ArcRotateCamera, PBR-Materialien & Post-Processing im Web</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../three-materials/index.html">Three.js Material</a>
+          <a class="nav-btn active" href="#">Babylon Basics</a>
+          <a class="nav-btn" href="../babylon-actions-gui/index.html">Babylon GUI & Actions</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container">
+        <canvas id="renderCanvas" style="width: 100%; height: 100%; touch-action: none;"></canvas>
+      </main>
+
+      <div class="controls-bar">
+        <label class="control-item">
+          <input type="checkbox" id="toggle-anim" checked />
+          <span>Animation</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-glow" checked />
+          <span>GlowLayer aktiv</span>
+        </label>
+        <label class="control-item">
+          <span>Glow-Intensität:</span>
+          <input type="range" id="glow-slider" min="0" max="2" step="0.1" value="0.9" style="width: 90px;" />
+        </label>
+        <div class="metric-badge" id="metric-info">Engine: Babylon.js WebGL/WebGPU</div>
+      </div>
+    </div>
+    <script type="module" src="../../src/babylon-basics.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>3D Licht & Materialien — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>Materialien, Shader & Beleuchtung</h1>
+          <p>Vergleich: MeshBasic → MeshLambert → MeshPhong → MeshStandard (PBR)</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../three-scenegraph/index.html">3D Scenegraph</a>
+          <a class="nav-btn active" href="#">3D Material</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container"></main>
+
+      <div class="controls-bar">
+        <label class="control-item">
+          <span>Material:</span>
+          <select id="select-material" style="background: rgba(30,41,59,0.8); color: #fff; border: 1px solid var(--border); padding: 3px 8px; border-radius: 4px; font-size: 0.8rem;">
+            <option value="basic">MeshBasicMaterial (Kein Licht)</option>
+            <option value="lambert">MeshLambertMaterial (Diffus)</option>
+            <option value="phong">MeshPhongMaterial (Glanzlicht)</option>
+            <option value="standard" selected>MeshStandardMaterial (PBR)</option>
+          </select>
+        </label>
+        <label class="control-item">
+          <span>Rauheit (Roughness):</span>
+          <input type="range" id="roughness-slider" min="0" max="1" step="0.05" value="0.25" style="width: 80px;" />
+        </label>
+        <label class="control-item">
+          <span>Metallizität:</span>
+          <input type="range" id="metalness-slider" min="0" max="1" step="0.05" value="0.8" style="width: 80px;" />
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-shadow" checked />
+          <span>Schattenwurf</span>
+        </label>
+      </div>
+    </div>
+    <script type="module" src="../../src/three-materials.ts"></script>
+  </body>
+</html>

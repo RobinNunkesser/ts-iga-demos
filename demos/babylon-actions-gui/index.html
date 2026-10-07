@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Babylon.js ActionManager & In-Canvas GUI — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>Babylon.js: ActionManager & In-Canvas GUI</h1>
+          <p>Native Event-Steuerung, OnPickTrigger & @babylonjs/gui</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../babylon-basics/index.html">Babylon Basics</a>
+          <a class="nav-btn active" href="#">Babylon GUI & Actions</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container">
+        <canvas id="renderCanvas" style="width: 100%; height: 100%; touch-action: none;"></canvas>
+      </main>
+
+      <div class="controls-bar">
+        <button class="btn-action" id="btn-spawn">🎯 Zielobjekt hinzufügen</button>
+        <button class="btn-action" id="btn-reset" style="background: rgba(30,41,59,0.8); border: 1px solid var(--border);">Punkte zurücksetzen</button>
+        <div class="metric-badge" id="metric-info">Tippe auf 3D-Kugeln im Canvas!</div>
+      </div>
+    </div>
+    <script type="module" src="../../src/babylon-actions-gui.ts"></script>
+  </body>
+</html>
