@@ -301,3 +301,222 @@ body.embed .controls-bar {
   color: var(--accent-cyan);
   border: 1px solid rgba(56, 189, 248, 0.3);
 }
+
+/* DUAL CANVAS MODE (Split-Screen) */
+#canvas-container.dual-mode {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  background: var(--border);
+  padding: 0;
+}
+
+.canvas-pane {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-secondary);
+  overflow: hidden;
+}
+
+.mount-target {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.mount-target canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+.pane-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.badge-p5 {
+  background: rgba(237, 34, 93, 0.2);
+  color: #f43f5e;
+  border: 1px solid rgba(237, 34, 93, 0.5);
+}
+
+.badge-three {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+}
+
+.pane-tech-info {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: rgba(15, 23, 42, 0.75);
+  padding: 3px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Controls & Inputs */
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.control-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.btn-toggle {
+  background: rgba(30, 41, 59, 0.7);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-toggle:hover {
+  color: #fff;
+  border-color: var(--accent-cyan);
+}
+
+.btn-toggle.active {
+  background: rgba(56, 189, 248, 0.2);
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.select-styled {
+  background: rgba(30, 41, 59, 0.9);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.select-styled:focus {
+  border-color: var(--accent-cyan);
+}
+
+/* Code Comparison Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-backdrop.hidden {
+  display: none;
+}
+
+.modal-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 860px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-main);
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.btn-close:hover {
+  color: #fff;
+}
+
+.modal-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.code-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.code-col h4 {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.code-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.code-col pre {
+  margin: 0;
+  background: #080d1a;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  color: #e2e8f0;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+

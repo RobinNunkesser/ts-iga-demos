@@ -14,6 +14,7 @@ export default defineConfig({
         threeMaterials: resolve(__dirname, "demos/three-materials/index.html"),
         babylonBasics: resolve(__dirname, "demos/babylon-basics/index.html"),
         babylonActionsGui: resolve(__dirname, "demos/babylon-actions-gui/index.html"),
+        hshlLogo3d: resolve(__dirname, "demos/hshl-logo-3d/index.html"),
       },
     },
   },

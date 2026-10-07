@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>HSHL 3D-Logo: p5.js vs. Three.js — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>HSHL 3D-Logo: p5.js vs. Three.js</h1>
+          <p>Vergleich: 6-Quader-Komposition (Immediate) vs. Vektor-Extrusion (Scenegraph)</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../transform/index.html">2D Transform</a>
+          <a class="nav-btn" href="../three-scenegraph/index.html">3D Scenegraph</a>
+          <a class="nav-btn active" href="#">HSHL 3D Logo</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container" class="dual-mode">
+        <!-- Linke Pane: p5.js -->
+        <div id="pane-p5" class="canvas-pane">
+          <div class="pane-badge badge-p5">p5.js (WEBGL Immediate Mode)</div>
+          <div id="p5-mount" class="mount-target"></div>
+          <div class="pane-tech-info">
+            <span>Geometrie: 6 Boxen (push/pop)</span>
+            <span>Shader: Imperatives Licht</span>
+          </div>
+        </div>
+
+        <!-- Rechte Pane: Three.js -->
+        <div id="pane-three" class="canvas-pane">
+          <div class="pane-badge badge-three">Three.js (ExtrudeGeometry + PBR)</div>
+          <div id="three-mount" class="mount-target"></div>
+          <div class="pane-tech-info">
+            <span>Geometrie: Vektor-Shape + Bevel</span>
+            <span>Shader: MeshStandardMaterial</span>
+          </div>
+        </div>
+      </main>
+
+      <div class="controls-bar">
+        <!-- Ansichts-Modus -->
+        <div class="control-group">
+          <span class="control-label">Ansicht:</span>
+          <button class="btn-toggle active" id="btn-view-split">Split</button>
+          <button class="btn-toggle" id="btn-view-p5">Nur p5.js</button>
+          <button class="btn-toggle" id="btn-view-three">Nur Three.js</button>
+        </div>
+
+        <!-- Farbpalette -->
+        <div class="control-group">
+          <span class="control-label">CI-Farben:</span>
+          <select id="select-palette" class="select-styled">
+            <option value="0">Blue &amp; Yellow (Standard)</option>
+            <option value="1">Darkblue &amp; Orange</option>
+            <option value="2">Green &amp; Blue</option>
+            <option value="3">Purple &amp; Lightgreen</option>
+            <option value="4">Red &amp; Mediumblue</option>
+          </select>
+        </div>
+
+        <!-- Checkboxen -->
+        <label class="control-item">
+          <input type="checkbox" id="toggle-rotate" checked />
+          <span>Auto-Rotation</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-sync" checked />
+          <span>Synchrone Drehung</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-wireframe" />
+          <span>Wireframe</span>
+        </label>
+
+        <!-- Code Modal Button -->
+        <button class="btn-action" id="btn-code-modal">Code-Vergleich</button>
+      </div>
+
+      <!-- Code Comparison Modal -->
+      <div id="code-modal" class="modal-backdrop hidden">
+        <div class="modal-card">
+          <div class="modal-header">
+            <h3>Architektur-Vergleich: HSHL-Logo in 3D</h3>
+            <button id="btn-close-modal" class="btn-close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="code-col">
+              <h4>🛑 p5.js (Immediate Mode / WebGL)</h4>
+              <p class="code-desc">Keine Vektor-Extrusion. Jeder Block muss aus 3 einzelnen Quadern zusammengebaut werden:</p>
+              <pre><code class="language-js">// draw() - muss jeden Frame neu aufgerufen werden
+p.ambientLight(100);
+p.directionalLight(255, 255, 255, 0.5, 0.8, -1);
+p.specularMaterial(50);
+
+// Linker U-Block aus 3 Quadern:
+p.push();
+p.fill(leftColor);
+// 1. Vertikaler Schenkel
+p.push(); p.translate(-23.5, 0, 0); p.box(17, 32, 16); p.pop();
+// 2. Oberer Balken
+p.push(); p.translate(-8.5, 9.5, 0); p.box(13, 13, 16); p.pop();
+// 3. Unterer Balken
+p.push(); p.translate(-8.5, -10, 0); p.box(13, 12, 16); p.pop();
+p.pop();</code></pre>
+            </div>
+            <div class="code-col">
+              <h4>✅ Three.js (Retained Mode / Scenegraph)</h4>
+              <p class="code-desc">Exakter 2D-Pfad aus dem CI-Manual wird deklarativ mit Fasung (Bevel) extrudiert:</p>
+              <pre><code class="language-js">// Einmalige Initialisierung:
+const leftShape = new THREE.Shape();
+leftShape.moveTo(-32, -16);
+leftShape.lineTo(-32, 16);
+leftShape.lineTo(-2, 16);
+leftShape.lineTo(-2, 3);
+leftShape.lineTo(-15, 3);
+leftShape.lineTo(-15, -4);
+leftShape.lineTo(-2, -4);
+leftShape.lineTo(-2, -16);
+
+// Echtes 3D-Mesh mit gerundeten Kanten & PBR:
+const geometry = new THREE.ExtrudeGeometry(leftShape, {
+  depth: 16, bevelEnabled: true, bevelThickness: 1.5
+});
+const material = new THREE.MeshStandardMaterial({
+  color: leftColor, roughness: 0.25, metalness: 0.15
+});
+scene.add(new THREE.Mesh(geometry, material));</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../../src/hshl-logo-3d.ts"></script>
+  </body>
+</html>
