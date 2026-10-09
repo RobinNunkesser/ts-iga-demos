@@ -80,7 +80,7 @@ const badgeCoin = MeshBuilder.CreateCylinder(
 badgeCoin.rotation.x = Math.PI / 2;
 badgeCoin.parent = badgeGroup;
 
-// Goldener/Messingfarbener Zierring um die Münze
+// Zierring um das Emblem
 const badgeRim = MeshBuilder.CreateTorus(
   "badgeRim",
   { diameter: 3.82, thickness: 0.14, tessellation: 64 },
@@ -89,13 +89,34 @@ const badgeRim = MeshBuilder.CreateTorus(
 badgeRim.rotation.x = Math.PI / 2;
 badgeRim.parent = badgeGroup;
 
-const matRim = new StandardMaterial("matRim", sceneConcept);
-matRim.diffuseColor = new Color3(0.95, 0.75, 0.2);
-matRim.specularColor = new Color3(1.0, 0.9, 0.6);
-matRim.specularPower = 64;
-badgeRim.material = matRim;
+// Ring-Materialien (Gold & Subtil)
+const matRimGold = new StandardMaterial("matRimGold", sceneConcept);
+matRimGold.diffuseColor = new Color3(0.95, 0.75, 0.2);
+matRimGold.specularColor = new Color3(1.0, 0.9, 0.6);
+matRimGold.specularPower = 64;
+badgeRim.material = matRimGold;
 
-// Vorderseiten-Textur mit dem KI-generierten Concept-Art
+const matRimSubtle = new StandardMaterial("matRimSubtle", sceneConcept);
+matRimSubtle.diffuseColor = new Color3(0.2, 0.28, 0.4);
+matRimSubtle.specularColor = new Color3(0.4, 0.5, 0.7);
+
+// Plaketten-Material 1: Acrylglas / Plexiglas mit Kantenlicht & Tiefe
+const matBadgeAcrylic = new StandardMaterial("matBadgeAcrylic", sceneConcept);
+matBadgeAcrylic.diffuseColor = new Color3(0.1, 0.18, 0.32);
+matBadgeAcrylic.alpha = 0.3; // Transluzente Glasscheibe
+matBadgeAcrylic.specularColor = new Color3(0.9, 0.95, 1.0);
+matBadgeAcrylic.specularPower = 128;
+
+// Plaketten-Material 2: Exakt an die Szenen-Hintergrundfarbe angepasst (seamless)
+const matBadgeMatched = new StandardMaterial("matBadgeMatched", sceneConcept);
+matBadgeMatched.diffuseColor = new Color3(0.06, 0.09, 0.15); // Exakt sceneConcept.clearColor
+matBadgeMatched.specularColor = new Color3(0.12, 0.18, 0.25);
+matBadgeMatched.specularPower = 16;
+
+// Standardmäßig Acryl-Glas aktiv
+badgeCoin.material = matBadgeAcrylic;
+
+// Vorderseiten-Textur mit dem KI-generierten Concept-Art (mit echtem Alpha-Kanal!)
 const matConceptFront = new StandardMaterial("matConceptFront", sceneConcept);
 const conceptTexture = new Texture(
   "../../assets/drone_concept.png",
@@ -103,21 +124,18 @@ const conceptTexture = new Texture(
   true,
   true // invertY
 );
+conceptTexture.hasAlpha = true; // Transparenz aus PNG aktivieren
 matConceptFront.diffuseTexture = conceptTexture;
-matConceptFront.specularColor = new Color3(0.3, 0.3, 0.3);
+matConceptFront.useAlphaFromDiffuseTexture = true;
+matConceptFront.backFaceCulling = false; // Auch bei Rückansicht sichtbar
+matConceptFront.specularColor = new Color3(0.2, 0.2, 0.2);
 matConceptFront.specularPower = 32;
 
 // Plane direkt auf der Front-Fläche des Emblems
-const frontDecal = MeshBuilder.CreatePlane("frontDecal", { size: 3.6 }, sceneConcept);
+const frontDecal = MeshBuilder.CreatePlane("frontDecal", { size: 3.4 }, sceneConcept);
 frontDecal.position.z = -0.115;
 frontDecal.material = matConceptFront;
 frontDecal.parent = badgeGroup;
-
-// Rückseiten-Material (dunkler gebürsteter Titan-Look)
-const matBack = new StandardMaterial("matBack", sceneConcept);
-matBack.diffuseColor = new Color3(0.12, 0.15, 0.2);
-matBack.specularColor = new Color3(0.5, 0.6, 0.8);
-badgeCoin.material = matBack;
 
 /* ==========================================================
    2. RECHTE PANE: PROZEDURALES 3D-MESH MIT KINEMATIK-INSPEKTOR
@@ -402,6 +420,39 @@ btnViewMesh.addEventListener("click", () => {
   btnViewMesh.classList.add("active");
   engineMesh.resize();
 });
+
+// 2D Darstellungs-Modi (Acryl-Standee / Freigestellter Cutout / Hintergrundfarbe angepasst)
+const btnBadgeAcrylic = document.getElementById("btn-badge-acrylic") as HTMLButtonElement;
+const btnBadgeCutout = document.getElementById("btn-badge-cutout") as HTMLButtonElement;
+const btnBadgeMatched = document.getElementById("btn-badge-matched") as HTMLButtonElement;
+
+function set2DStyle(style: "acrylic" | "cutout" | "matched") {
+  btnBadgeAcrylic.classList.toggle("active", style === "acrylic");
+  btnBadgeCutout.classList.toggle("active", style === "cutout");
+  btnBadgeMatched.classList.toggle("active", style === "matched");
+
+  if (style === "acrylic") {
+    badgeCoin.setEnabled(true);
+    badgeCoin.material = matBadgeAcrylic;
+    badgeRim.setEnabled(true);
+    badgeRim.material = matRimGold;
+    frontDecal.position.z = -0.115;
+  } else if (style === "cutout") {
+    badgeCoin.setEnabled(false);
+    badgeRim.setEnabled(false);
+    frontDecal.position.z = 0; // Direkt im Zentrum rotieren
+  } else if (style === "matched") {
+    badgeCoin.setEnabled(true);
+    badgeCoin.material = matBadgeMatched;
+    badgeRim.setEnabled(true);
+    badgeRim.material = matRimSubtle;
+    frontDecal.position.z = -0.115;
+  }
+}
+
+btnBadgeAcrylic.addEventListener("click", () => set2DStyle("acrylic"));
+btnBadgeCutout.addEventListener("click", () => set2DStyle("cutout"));
+btnBadgeMatched.addEventListener("click", () => set2DStyle("matched"));
 
 // Checkboxen
 const toggleRotate = document.getElementById("toggle-rotate") as HTMLInputElement;

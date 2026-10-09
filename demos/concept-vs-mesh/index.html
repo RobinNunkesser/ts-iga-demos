@@ -56,6 +56,14 @@
           <button class="btn-toggle" id="btn-view-mesh">Nur 3D Mesh</button>
         </div>
 
+        <!-- 2D Stil Modus -->
+        <div class="control-group">
+          <span class="control-label">2D-Darstellung:</span>
+          <button class="btn-toggle active" id="btn-badge-acrylic" title="Acryl-Glas-Aufsteller mit Tiefe & Lichtkante">Acryl-Standee</button>
+          <button class="btn-toggle" id="btn-badge-cutout" title="Reine transparente Silhouette (zeigt den Paper-Mario-Effekt)">Freigestellter Cutout</button>
+          <button class="btn-toggle" id="btn-badge-matched" title="Plakette farblich an den Szenenhintergrund angepasst">Farbe angepasst</button>
+        </div>
+
         <!-- Checkboxen -->
         <label class="control-item">
           <input type="checkbox" id="toggle-rotate" checked />
@@ -119,6 +127,16 @@
                 <li><strong>Echtzeit-PBR:</strong> Reagiert auf dynamische Lichtquellen, Schlagschatten und Materialreflexionen.</li>
               </ul>
             </div>
+          </div>
+
+          <!-- Didaktischer Kasten: Warum sieht die 2D-Drehung "komisch" aus? -->
+          <div style="padding: 14px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; background: rgba(234, 179, 8, 0.08);">
+            <strong style="color: #facc15;">🔍 Warum wirkt die Drehung eines 2D-Bildes im 3D-Raum ungewohnt?</strong><br />
+            <ul style="margin: 6px 0 0 18px; padding: 0;">
+              <li><strong>Papierdünn (Dicke = 0):</strong> Im <em>Freigestellten Cutout</em>-Modus kollabiert das 2D-Bild bei 90°-Seitenansicht zur Nulllinie („Paper-Mario-Effekt“), da ihm die Z-Tiefe fehlt.</li>
+              <li><strong>Eingebackenes Licht (Baked Lighting):</strong> Die Glanzlichter und Schatten drehen sich starr mit dem 2D-Bild mit, anstatt dynamisch zum Scheinwerfer der Szene zu wandern.</li>
+              <li><strong>Rettungsanker Acryl-Standee:</strong> Indem das freigestellte Bild auf einen transparenten Acrylglas-Körper montiert wird, erhält es reale Brechungskanten und physische Dicke, was das visuelle „Kollabieren“ elegant abfängt.</li>
+            </ul>
           </div>
 
           <div style="padding: 16px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; background: rgba(0,0,0,0.2);">
