@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>2D-KI-Concept vs. 3D-Mesh — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>2D-KI-Concept vs. Prozedurales 3D-Mesh</h1>
+          <p>Didaktik: Textur-Illusion (0 DoF) vs. Analytische Kinematik & Gelenke (6 DoF)</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../three-scenegraph/index.html">Scenegraph</a>
+          <a class="nav-btn" href="../hshl-logo-3d/index.html">HSHL 3D Logo</a>
+          <a class="nav-btn active" href="#">Concept vs. Mesh</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container" class="dual-mode">
+        <!-- Linke Pane: 2D-KI Concept Art auf 3D-Präge-Emblem -->
+        <div id="pane-concept" class="canvas-pane">
+          <div class="pane-badge badge-p5" style="background: rgba(234, 179, 8, 0.15); color: #eab308; border-color: rgba(234, 179, 8, 0.4);">
+            2D-KI-Concept (Prompt-generiert)
+          </div>
+          <div id="concept-mount" class="mount-target"></div>
+          <div class="pane-tech-info">
+            <span>Visuelle Illusion: Hoch (Shader/Licht im Pixel)</span>
+            <span>Gelenke / Kinematik: 0 DoF (Starr)</span>
+          </div>
+        </div>
+
+        <!-- Rechte Pane: Prozedurales 3D Babylon.js Mesh -->
+        <div id="pane-mesh" class="canvas-pane">
+          <div class="pane-badge badge-three" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.4);">
+            Prozedurales 3D-Mesh (Babylon.js Scenegraph)
+          </div>
+          <div id="mesh-mount" class="mount-target"></div>
+          <div class="pane-tech-info">
+            <span>Geometrie: 12 Komponenten (Primitive)</span>
+            <span>Kinematik: 4 bewegliche Flügel-Scharniere</span>
+          </div>
+        </div>
+      </main>
+
+      <div class="controls-bar">
+        <!-- Ansichts-Modus -->
+        <div class="control-group">
+          <span class="control-label">Ansicht:</span>
+          <button class="btn-toggle active" id="btn-view-split">Split</button>
+          <button class="btn-toggle" id="btn-view-concept">Nur 2D Concept</button>
+          <button class="btn-toggle" id="btn-view-mesh">Nur 3D Mesh</button>
+        </div>
+
+        <!-- Checkboxen -->
+        <label class="control-item">
+          <input type="checkbox" id="toggle-rotate" checked />
+          <span>Auto-Rotation</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-sync" checked />
+          <span>Synchrone Drehung</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-wireframe" />
+          <span>Wireframe-Modus</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-joints" />
+          <span>Gelenk-Inspektor</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-anim" checked />
+          <span>Flügelschlag</span>
+        </label>
+        <label class="control-item">
+          <input type="checkbox" id="toggle-explode" />
+          <span>Explosions-Ansicht</span>
+        </label>
+
+        <!-- Analyse Modal Button -->
+        <button class="btn-action" id="btn-didactic-modal">Didaktische Analyse</button>
+      </div>
+
+      <!-- Didaktisches Analyse Modal -->
+      <div id="didactic-modal" class="modal-backdrop hidden">
+        <div class="modal-card" style="max-width: 840px;">
+          <div class="modal-header">
+            <h3>Didaktische Analyse: Die Asset-Pipeline-Illusion</h3>
+            <button id="btn-close-modal" class="btn-close">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="code-col" style="flex: 1;">
+              <h4 style="color: #eab308;">🎨 2D KI-Concept (Prompt-generiert)</h4>
+              <p class="code-desc">
+                Generiert durch Diffusions-Modelle (z. B. Imagen). Erzeugt eine <strong>überwältigende visuelle Illusion</strong> durch vorberechnetes Licht, Schatten und Mikrotexturen (Kratzer, Kanten).
+              </p>
+              <ul style="font-size: 0.85rem; line-height: 1.5; padding-left: 18px; color: var(--text-muted); margin-bottom: 12px;">
+                <li><strong>Freiheitsgrade:</strong> 0 DoF (Ein starres Flachbild).</li>
+                <li><strong>Kinematik:</strong> Keine Gelenke. Flügel können sich nicht physisch drehen oder auf- und zufächern.</li>
+                <li><strong>Speicher:</strong> Mehrere Megabyte Bitmap-Daten (PNG/JPG).</li>
+                <li><strong>Laufzeit:</strong> Statisch. Licht und Schatten können nicht auf dynamische Scheinwerfer reagieren.</li>
+              </ul>
+            </div>
+
+            <div class="code-col" style="flex: 1;">
+              <h4 style="color: #38bdf8;">🧊 Prozedurales 3D-Mesh (Babylon.js)</h4>
+              <p class="code-desc">
+                Direkt analytisch als mathematischer Scenegraph konstruiert. <strong>Echte 3D-Kinematik</strong>, aber ohne komplexe Textur-Maps sichtbar aus Primitiven zusammengesetzt.
+              </p>
+              <ul style="font-size: 0.85rem; line-height: 1.5; padding-left: 18px; color: var(--text-muted); margin-bottom: 12px;">
+                <li><strong>Freiheitsgrade:</strong> Volle 6 DoF pro Bauteil.</li>
+                <li><strong>Kinematik:</strong> 4 getrennte Rotationsachsen (Gelenk-Inspektor zeigt die lokalen Pivot-Systeme).</li>
+                <li><strong>Speicher:</strong> 0 KB Download — rein prozeduraler TypeScript-Code.</li>
+                <li><strong>Echtzeit-PBR:</strong> Reagiert auf dynamische Lichtquellen, Schlagschatten und Materialreflexionen.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div style="padding: 16px 20px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; background: rgba(0,0,0,0.2);">
+            <strong style="color: #fff;">💡 Die zentrale Erkenntnis für die Vorlesung:</strong><br />
+            <em>„Ein hübsches 2D-KI-Bild ist noch lange kein 3D-Game-Asset. Die eigentliche Ingenieurleistung in 3D-Grafikanwendungen besteht im Konstruieren von Topologie, Gelenken (Rigging) und UV-Unwrapping. Wo 2D-Bilder mit Shading täuschen, muss die 3D-Engine echte Raummathematik betreiben.“</em>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="../../src/concept-vs-mesh.ts"></script>
+  </body>
+</html>
