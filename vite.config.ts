@@ -3,6 +3,9 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   base: "./",
+  optimizeDeps: {
+    exclude: ["@babylonjs/havok"],
+  },
   build: {
     rollupOptions: {
       input: {
@@ -14,6 +17,7 @@ export default defineConfig({
         threeMaterials: resolve(__dirname, "demos/three-materials/index.html"),
         babylonBasics: resolve(__dirname, "demos/babylon-basics/index.html"),
         babylonActionsGui: resolve(__dirname, "demos/babylon-actions-gui/index.html"),
+        babylonPhysics: resolve(__dirname, "demos/babylon-physics/index.html"),
         hshlLogo3d: resolve(__dirname, "demos/hshl-logo-3d/index.html"),
         conceptVsMesh: resolve(__dirname, "demos/concept-vs-mesh/index.html"),
       },
