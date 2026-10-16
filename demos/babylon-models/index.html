@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Babylon.js 3D-Assets & glTF-Animationen — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+    <style>
+      .asset-info-overlay {
+        position: absolute;
+        top: 70px;
+        left: 20px;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(8px);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        pointer-events: none;
+        max-width: 320px;
+        z-index: 10;
+        line-height: 1.4;
+      }
+      .asset-info-overlay strong {
+        color: var(--text-main);
+      }
+      .asset-highlight-static {
+        color: #38bdf8;
+      }
+      .asset-highlight-anim {
+        color: #10b981;
+      }
+      .anim-btn-group {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .btn-anim.active {
+        background: #0284c7;
+        border-color: #38bdf8;
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <header>
+        <div class="title-group">
+          <h1>Babylon.js: 3D-Assets & glTF-Animation</h1>
+          <p>Kenney Mini-Forest (statisch) & Cube-Pets (glTF-Skelettanimation)</p>
+        </div>
+        <nav class="nav-links">
+          <a class="nav-btn" href="../../index.html">← Hub</a>
+          <a class="nav-btn" href="../babylon-basics/index.html">Basics</a>
+          <a class="nav-btn" href="../babylon-actions-gui/index.html">GUI & Actions</a>
+          <a class="nav-btn" href="../babylon-physics/index.html">Havok</a>
+          <a class="nav-btn active" href="#">3D-Assets & Anim</a>
+        </nav>
+      </header>
+
+      <main id="canvas-container" style="position: relative;">
+        <canvas id="renderCanvas" style="width: 100%; height: 100%; touch-action: none;"></canvas>
+        <div class="asset-info-overlay" id="asset-inspector">
+          <div><strong class="asset-highlight-static">🌲 Statische Umgebung:</strong> Kenney Mini-Forest (.glb)</div>
+          <div><strong class="asset-highlight-anim">🐶 Animierte Charaktere:</strong> Kenney Cube-Pets (.glb)</div>
+          <div id="inspector-detail" style="margin-top: 4px; font-size: 0.76rem; color: #cbd5e1;">
+            Klicke auf Objekte oder wechsle unten die Animationen!
+          </div>
+        </div>
+      </main>
+
+      <div class="controls-bar" style="flex-direction: column; gap: 8px;">
+        <div style="display: flex; gap: 8px; align-items: center; justify-content: space-between; width: 100%; flex-wrap: wrap;">
+          <div class="anim-btn-group" id="pet-buttons">
+            <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center;">Tier:</span>
+            <button class="btn-action active" data-pet="dog">🐶 Hund</button>
+            <button class="btn-action" data-pet="cat">🐱 Katze</button>
+            <button class="btn-action" data-pet="bunny">🐰 Hase</button>
+            <button class="btn-action" data-pet="chick">🐥 Küken</button>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <button class="btn-action" id="btn-camera" style="background: rgba(30,41,59,0.8); border: 1px solid var(--border);">🎥 Kamera: Freier Orbit</button>
+            <div class="metric-badge" id="metric-info">Status: Lädt Assets...</div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: wrap;">
+          <span style="font-size: 0.8rem; color: var(--text-muted); align-self: center;">Skelett-Animation:</span>
+          <div class="anim-btn-group" id="anim-buttons">
+            <button class="btn-action btn-anim active" data-anim="walk">🚶 Walk (Gehen)</button>
+            <button class="btn-action btn-anim" data-anim="run">🏃 Run (Laufen)</button>
+            <button class="btn-action btn-anim" data-anim="dance">🕺 Dance (Tanzen)</button>
+            <button class="btn-action btn-anim" data-anim="eat">🥕 Eat (Fressen)</button>
+            <button class="btn-action btn-anim" data-anim="idle">💤 Idle (Warten)</button>
+            <button class="btn-action btn-anim" data-anim="static" style="background: rgba(15, 23, 42, 0.9); border-color: #64748b;">🛑 Static (T-Pose)</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../../src/babylon-models.ts"></script>
+  </body>
+</html>
