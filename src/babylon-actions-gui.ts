@@ -23,8 +23,8 @@ setupEmbedMode();
 const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 if (!canvas) throw new Error("renderCanvas element missing");
 
-// 1. Engine & Scene
-const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true, adaptToDeviceRatio: true });
+engine.setHardwareScalingLevel(1.0 / Math.min(window.devicePixelRatio || 1, 2));
 const scene = new Scene(engine);
 scene.clearColor = new Color4(0.04, 0.06, 0.1, 1.0);
 

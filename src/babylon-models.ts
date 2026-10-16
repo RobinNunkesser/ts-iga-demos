@@ -12,6 +12,7 @@ import {
   SceneLoader,
   AnimationGroup,
   AbstractMesh,
+  DefaultRenderingPipeline,
 } from "@babylonjs/core";
 import "@babylonjs/loaders/glTF";
 import { setupEmbedMode } from "./embed";
@@ -21,8 +22,16 @@ setupEmbedMode();
 const canvas = document.getElementById("renderCanvas") as HTMLCanvasElement;
 if (!canvas) throw new Error("renderCanvas element missing");
 
-// 1. Engine & Szene mit sonniger Wald-Atmosphäre
-const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+// 1. Engine mit nativer Retina / High-DPI-Auflösung
+const engine = new Engine(canvas, true, {
+  preserveDrawingBuffer: true,
+  stencil: true,
+  adaptToDeviceRatio: true,
+  antialias: true,
+});
+// hardwareScalingLevel = 1 / dpr schaltet von 1x auf echte Display-Auflösung um (gestochen scharf)
+engine.setHardwareScalingLevel(1.0 / Math.min(window.devicePixelRatio || 1, 2));
+
 const scene = new Scene(engine);
 scene.clearColor = new Color4(0.48, 0.72, 0.92, 1.0); // Weicher Himmel
 
@@ -51,6 +60,11 @@ hemi.intensity = 0.75;
 const sun = new DirectionalLight("sun", new Vector3(-1, -2, 1), scene);
 sun.diffuse = new Color3(1.0, 0.95, 0.85);
 sun.intensity = 1.0;
+
+// 3b. Anti-Aliasing Rendering Pipeline (4x MSAA + FXAA für gestochen scharfe Kanten)
+const pipeline = new DefaultRenderingPipeline("defaultPipeline", true, scene, [camera]);
+pipeline.samples = 4;
+pipeline.fxaaEnabled = true;
 
 // 4. Stilisierter Waldboden
 const ground = MeshBuilder.CreateDisc(
@@ -438,6 +452,7 @@ async function init() {
   });
 
   window.addEventListener("resize", () => {
+    engine.setHardwareScalingLevel(1.0 / Math.min(window.devicePixelRatio || 1, 2));
     engine.resize();
   });
 
