@@ -78,8 +78,8 @@ river.material = riverMat;
 // 5. Pfad-Helper zur robusten Asset-Auflösung
 function getAssetPath(subpath: string): string {
   const isDemoSubdir = window.location.pathname.includes("/demos/");
-  const prefix = isDemoSubdir ? "../../" : "./";
-  return `${prefix}assets/models/${subpath}`;
+  const rel = isDemoSubdir ? "../../" : "./";
+  return new URL(`${rel}assets/models/${subpath}`, window.location.href).href;
 }
 
 // 6. Statische Forest-Assets laden
@@ -138,6 +138,7 @@ async function loadStaticEnvironment() {
         root.name = `static_${item.name}_${item.file}`;
         root.position.copyFrom(item.pos);
         root.scaling.scaleInPlace(item.scale);
+        root.rotationQuaternion = null;
         if (item.rotY !== undefined) {
           root.rotation.y = item.rotY;
         }
@@ -211,6 +212,7 @@ async function loadPet(petId: string): Promise<PetEntity | null> {
     const root = res.meshes[0];
     root.name = `pet_${petId}`;
     root.scaling.setAll(0.55); // Angenehme Proportionsgröße zu Bäumen/Zelt
+    root.rotationQuaternion = null;
 
     const animMap = new Map<string, AnimationGroup>();
     for (const ag of res.animationGroups) {
@@ -429,6 +431,16 @@ function setupUI() {
 // 11. Initialisierung
 async function init() {
   setupUI();
+
+  // Render-Loop sofort starten, damit kein Standbild entsteht
+  engine.runRenderLoop(() => {
+    scene.render();
+  });
+
+  window.addEventListener("resize", () => {
+    engine.resize();
+  });
+
   const metric = document.getElementById("metric-info");
   if (metric) metric.textContent = "Lade Mini-Forest & Cube-Pets...";
 
@@ -443,14 +455,6 @@ async function init() {
 
   // Initialer UI-Status
   updateUI();
-
-  engine.runRenderLoop(() => {
-    scene.render();
-  });
-
-  window.addEventListener("resize", () => {
-    engine.resize();
-  });
 }
 
 init();
