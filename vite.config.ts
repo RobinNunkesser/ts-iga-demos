@@ -19,6 +19,7 @@ export default defineConfig({
         babylonActionsGui: resolve(__dirname, "demos/babylon-actions-gui/index.html"),
         babylonPhysics: resolve(__dirname, "demos/babylon-physics/index.html"),
         babylonModels: resolve(__dirname, "demos/babylon-models/index.html"),
+        babylonPetInspector: resolve(__dirname, "demos/babylon-pet-inspector/index.html"),
         hshlLogo3d: resolve(__dirname, "demos/hshl-logo-3d/index.html"),
         conceptVsMesh: resolve(__dirname, "demos/concept-vs-mesh/index.html"),
       },
