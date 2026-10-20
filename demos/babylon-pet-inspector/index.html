@@ -8,24 +8,67 @@
     <style>
       .asset-info-overlay {
         position: absolute;
-        top: 20px;
-        left: 20px;
+        top: 14px;
+        left: 14px;
         background: rgba(15, 23, 42, 0.88);
         backdrop-filter: blur(10px);
         border: 1px solid var(--border);
         border-radius: 8px;
-        padding: 12px 16px;
-        font-size: 0.84rem;
+        padding: 8px 12px;
+        font-size: 0.82rem;
         color: var(--text-muted);
-        pointer-events: none;
-        max-width: 340px;
+        max-width: 320px;
         z-index: 10;
-        line-height: 1.5;
+        line-height: 1.4;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        pointer-events: auto;
+        transition: all 0.25s ease;
       }
       .asset-info-overlay strong {
         color: var(--text-main);
       }
+      .asset-info-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .btn-info-toggle {
+        background: rgba(56, 189, 248, 0.15);
+        color: #38bdf8;
+        border: 1px solid rgba(56, 189, 248, 0.3);
+        border-radius: 4px;
+        padding: 2px 7px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.15s ease;
+      }
+      .btn-info-toggle:hover {
+        background: rgba(56, 189, 248, 0.3);
+      }
+      .asset-info-body {
+        transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.2s ease;
+        overflow: hidden;
+      }
+      .asset-info-overlay.collapsed .asset-info-body {
+        max-height: 0;
+        opacity: 0;
+        margin: 0;
+        padding: 0;
+        pointer-events: none;
+      }
+      .asset-info-overlay.collapsed {
+        padding: 5px 10px;
+        background: rgba(15, 23, 42, 0.72);
+        border-color: rgba(56, 189, 248, 0.3);
+      }
+
       .badge-highlight {
         color: #38bdf8;
         font-weight: 600;
@@ -72,6 +115,40 @@
       .pet-select-dropdown:focus {
         border-color: var(--accent-cyan);
       }
+
+      /* Smartphone-Optimierung */
+      @media (max-width: 640px), (max-height: 640px) {
+        .asset-info-overlay {
+          top: 8px;
+          left: 8px;
+          max-width: calc(100% - 16px);
+          font-size: 0.76rem;
+        }
+        .controls-bar {
+          padding: 6px 8px !important;
+          gap: 6px !important;
+        }
+        .anim-btn-group {
+          flex-wrap: nowrap !important;
+          overflow-x: auto !important;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 4px;
+          width: 100%;
+        }
+        .btn-action {
+          padding: 5px 9px !important;
+          font-size: 0.76rem !important;
+          white-space: nowrap;
+        }
+        .pet-select-dropdown {
+          padding: 4px 8px !important;
+          font-size: 0.78rem !important;
+          max-width: 170px;
+        }
+        .metric-badge {
+          display: none !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -94,15 +171,26 @@
       <main id="canvas-container" style="position: relative;">
         <canvas id="renderCanvas" style="width: 100%; height: 100%; touch-action: none;"></canvas>
         <div class="asset-info-overlay" id="asset-inspector">
-          <div><strong id="info-pet-title" class="badge-highlight">🐶 Hund</strong> <span id="info-pet-filename" style="font-size: 0.75rem; opacity: 0.8;">(animal-dog.glb)</span></div>
-          <div style="margin-top: 4px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 0.78rem;">
-            <div>Triangles: <span id="info-triangles" class="badge-triangles">-</span></div>
-            <div>Vertices: <span id="info-vertices">-</span></div>
-            <div>Skelett-Bones: <span id="info-bones" class="badge-bones">-</span></div>
-            <div>Animationen: <span id="info-anim-count">-</span></div>
+          <div class="asset-info-header" id="info-header" title="Klicken, um Details ein-/auszublenden">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <strong id="info-pet-title" class="badge-highlight">🐶 Hund</strong>
+              <span id="info-pet-filename" style="font-size: 0.72rem; opacity: 0.8;">(animal-dog.glb)</span>
+            </div>
+            <button class="btn-info-toggle" id="btn-toggle-info" type="button" aria-label="Details ein-/ausblenden">
+              <span id="toggle-info-label">Info</span>
+              <span id="toggle-info-icon" style="font-size: 0.7rem;">▲</span>
+            </button>
           </div>
-          <div id="info-current-anim" style="margin-top: 6px; font-size: 0.76rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
-            Aktiv: <strong style="color: #38bdf8;">walk</strong>
+          <div class="asset-info-body" id="info-body">
+            <div style="margin-top: 6px; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; font-size: 0.76rem;">
+              <div>Triangles: <span id="info-triangles" class="badge-triangles">-</span></div>
+              <div>Vertices: <span id="info-vertices">-</span></div>
+              <div>Bones: <span id="info-bones" class="badge-bones">-</span></div>
+              <div>Clips: <span id="info-anim-count">-</span></div>
+            </div>
+            <div id="info-current-anim" style="margin-top: 6px; font-size: 0.74rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 4px;">
+              Aktiv: <strong style="color: #38bdf8;">walk</strong>
+            </div>
           </div>
         </div>
       </main>

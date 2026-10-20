@@ -157,6 +157,11 @@ const btnResetCam = document.getElementById("btn-reset-cam") as HTMLButtonElemen
 const metricStatus = document.getElementById("metric-status") as HTMLDivElement;
 const animButtonsContainer = document.getElementById("anim-buttons") as HTMLDivElement;
 
+const assetInspector = document.getElementById("asset-inspector") as HTMLDivElement;
+const infoHeader = document.getElementById("info-header") as HTMLDivElement;
+const btnToggleInfo = document.getElementById("btn-toggle-info") as HTMLButtonElement;
+const toggleInfoIcon = document.getElementById("toggle-info-icon") as HTMLSpanElement;
+
 const infoPetTitle = document.getElementById("info-pet-title") as HTMLElement;
 const infoPetFilename = document.getElementById("info-pet-filename") as HTMLElement;
 const infoTriangles = document.getElementById("info-triangles") as HTMLElement;
@@ -164,6 +169,36 @@ const infoVertices = document.getElementById("info-vertices") as HTMLElement;
 const infoBones = document.getElementById("info-bones") as HTMLElement;
 const infoAnimCount = document.getElementById("info-anim-count") as HTMLElement;
 const infoCurrentAnim = document.getElementById("info-current-anim") as HTMLElement;
+
+// Info-Card ein-/ausklappen (auf Smartphones standardmäßig eingeklappt)
+function setInfoCollapsed(collapsed: boolean) {
+  if (collapsed) {
+    assetInspector.classList.add("collapsed");
+    if (toggleInfoIcon) toggleInfoIcon.textContent = "▼";
+  } else {
+    assetInspector.classList.remove("collapsed");
+    if (toggleInfoIcon) toggleInfoIcon.textContent = "▲";
+  }
+}
+
+// Initialer Check: Auf Bildschirmen <= 640px einklappen, um das Modell nicht zu verdecken
+const isMobileScreen = window.innerWidth <= 640 || window.innerHeight <= 640;
+setInfoCollapsed(isMobileScreen);
+
+if (infoHeader) {
+  infoHeader.addEventListener("click", () => {
+    const isCollapsed = assetInspector.classList.contains("collapsed");
+    setInfoCollapsed(!isCollapsed);
+  });
+}
+
+if (btnToggleInfo) {
+  btnToggleInfo.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isCollapsed = assetInspector.classList.contains("collapsed");
+    setInfoCollapsed(!isCollapsed);
+  });
+}
 
 // Dropdown initial befüllen
 function populatePetDropdown() {
@@ -408,7 +443,26 @@ function capitalize(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-// 12. Render-Loop mit sanfter Drehung
+// 12. Responsive Kamera-Anpassung für Smartphones
+function updateCameraViewport() {
+  const width = engine.getRenderWidth();
+  const height = Math.max(1, engine.getRenderHeight());
+  const aspect = width / height;
+
+  if (aspect < 0.8) {
+    // Smartphone Portrait: Etwas mehr Abstand & leicht erhöhter Fokus
+    camera.radius = DEFAULT_RADIUS * 1.35;
+    camera.target.y = 0.95;
+  } else if (aspect < 1.1) {
+    camera.radius = DEFAULT_RADIUS * 1.15;
+    camera.target.y = 0.9;
+  } else {
+    camera.radius = DEFAULT_RADIUS;
+    camera.target.y = 0.85;
+  }
+}
+
+// 13. Render-Loop mit sanfter Drehung
 scene.onBeforeRenderObservable.add(() => {
   if (isAutoRotating) {
     camera.alpha += 0.006;
@@ -421,8 +475,10 @@ engine.runRenderLoop(() => {
 
 window.addEventListener("resize", () => {
   engine.resize();
+  updateCameraViewport();
 });
 
 // Initialisierung
 populatePetDropdown();
 loadPetModel(activePetId);
+updateCameraViewport();
