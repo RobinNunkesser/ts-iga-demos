@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Babylon.js WebXR Meta Quest 3 — IGA Demos</title>
+    <link rel="stylesheet" href="../../src/style.css" />
+    <style>
+      .xr-overlay {
+        position: absolute;
+        top: 70px;
+        left: 20px;
+        background: rgba(15, 23, 42, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        max-width: 360px;
+        z-index: 10;
+        line-height: 1.5;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      }
+      .xr-overlay h4 {
+        margin: 0 0 6px 0;
+        color: var(--text-main);
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .xr-status-badge {
+        display: inline-block;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.75rem;
+      }
+      .xr-supported {
+        background: rgba(16, 185, 129, 0.2);
+        color: #10b981;
+        border: 1px solid rgba(16, 185, 129, 0.4);
+      }
+      .xr-unsupported {
+        background: rgba(245, 158, 11, 0.2);
+        color: #f59e0b;
+        border: 1px solid rgba(245, 158, 11, 0.4);
+      }
+      .xr-controls-list {
+        margin: 8px 0 0 0;
+        padding-left: 18px;
+        font-size: 0.8rem;
+      }
+      .xr-controls-list li {
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="demo-wrapper">
+      <div class="demo-header">
+        <a class="btn-back" href="../../index.html">← Zurück zum Hub</a>
+        <h2>🥽 Babylon.js WebXR: Meta Quest 3 Prototype</h2>
+      </div>
+
+      <div class="canvas-container">
+        <canvas id="renderCanvas"></canvas>
+
+        <div class="xr-overlay">
+          <h4>🥽 Meta Quest 3 WebXR Status</h4>
+          <div>
+            WebXR Status: <span id="xr-badge" class="xr-status-badge xr-unsupported">Prüfe WebXR...</span>
+          </div>
+          <p style="margin: 6px 0 0 0;">
+            <strong>In der Quest 3:</strong> Öffne diese HTTPS-URL im Meta Quest Browser und drücke auf den <strong>VR-Button</strong> unten rechts.
+          </p>
+          <ul class="xr-controls-list">
+            <li><strong>Thumbstick nach vorne:</strong> Teleportieren auf dem Boden</li>
+            <li><strong>Trigger / Laserpointer:</strong> 3D-GUI und Objekte anklicken</li>
+            <li><strong>Desktop:</strong> Maus (Orbit) zum Umschauen & Klicken</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="demo-footer">
+        <div style="display: flex; gap: 8px; align-items: center; width: 100%; flex-wrap: wrap; justify-content: space-between;">
+          <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <button class="btn-action" id="btn-pet-dog">🐶 Hund</button>
+            <button class="btn-action" id="btn-pet-dragon">🐲 Drache</button>
+            <button class="btn-action" id="btn-pet-chick">🐥 Küken</button>
+            <button class="btn-action" id="btn-anim-dance">🕺 Tanzen</button>
+            <button class="btn-action" id="btn-toggle-time">☀️ / 🌙 Tag-Nacht</button>
+          </div>
+          <div class="metric-badge" id="metric-info">Lade Kenney 3D-Assets...</div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="../../src/babylon-webxr-quest.ts"></script>
+  </body>
+</html>

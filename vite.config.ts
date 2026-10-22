@@ -1,8 +1,13 @@
 import { resolve } from "path";
 import { defineConfig } from "vite";
+import basicSsl from "@vitejs/plugin-basic-ssl";
 
 export default defineConfig({
   base: "./",
+  plugins: [basicSsl()],
+  server: {
+    host: true, // Erreichbar im lokalen WLAN für Meta Quest 3
+  },
   optimizeDeps: {
     exclude: ["@babylonjs/havok"],
   },
@@ -20,6 +25,7 @@ export default defineConfig({
         babylonPhysics: resolve(__dirname, "demos/babylon-physics/index.html"),
         babylonModels: resolve(__dirname, "demos/babylon-models/index.html"),
         babylonPetInspector: resolve(__dirname, "demos/babylon-pet-inspector/index.html"),
+        babylonWebxrQuest: resolve(__dirname, "demos/babylon-webxr-quest/index.html"),
         hshlLogo3d: resolve(__dirname, "demos/hshl-logo-3d/index.html"),
         conceptVsMesh: resolve(__dirname, "demos/concept-vs-mesh/index.html"),
       },
